@@ -82,9 +82,6 @@ public class ShoeDetail {
 
     @Override
     public String toString() {
-        return shoe + " " + currency + " " +color + " " + sizeDetail +
-                ", Price =" + price +
-                ", Stock =" + stock +
-                '}';
+        return shoe + " " + color + " " + sizeDetail + " Price: " + price + currency;
     }
 }

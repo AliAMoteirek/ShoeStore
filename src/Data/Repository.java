@@ -16,6 +16,7 @@ public class Repository {
     private String password;
 
     public Repository() {
+        // We create a connection with the database by using properties.
         Properties p = new Properties();
         try (FileReader fileReader = new FileReader("Resources/Setting.properties")) {
             p.load(fileReader);
@@ -27,12 +28,7 @@ public class Repository {
         }
     }
 
-
-    /*
-            Prompt the user by printing all the products that are in stock, the user can choose one.
-     */
-
-
+    // Prompt the user by printing all the products that are in stock, the user can choose one.
     public List<ShoeDetail> getAllShoesInStock() {
 
         List<ShoeDetail> shoeDetailList = new ArrayList<>();
@@ -62,12 +58,12 @@ public class Repository {
                 SizeDetail sizeDetail = new SizeDetail(
                         rs.getInt("sizeDetail_id"),
                         rs.getBigDecimal("sizeNumber"));
+                Brand brand = new Brand(
+                        rs.getInt("brand_id"),
+                        rs.getString("brandName"));
                 Shoe shoe = new Shoe(
                         rs.getInt("shd.shoe_id"),
-                        rs.getString("modelName"));
-                /*Brand brand = new Brand(
-                        rs.getInt("brand_id"),
-                        rs.getString("brandName"));*/
+                        rs.getString("modelName"), brand);
                 BigDecimal price = rs.getBigDecimal("price");
                 int stock = rs.getInt("stock");
                 int id = rs.getInt("shd.id");
@@ -79,6 +75,7 @@ public class Repository {
         }
         return shoeDetailList;
     }
+
 
     public List<Customer> getAllCustomers() {
         List<Customer> customerList = new ArrayList<>();

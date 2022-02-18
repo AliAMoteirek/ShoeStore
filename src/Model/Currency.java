@@ -19,6 +19,6 @@ public class Currency {
 
     @Override
     public String toString() {
-        return "Currency{" + '\'' +  currencyCode + '\'' + '}';
+        return " " + currencyCode + ".";
     }
 }

@@ -22,7 +22,7 @@ public class LoginPage {
 
     LoginPage(Map<String, String> loginInfoOriginal) {
 
-        logininfo = loginInfoOriginal;
+        logininfo = loginInfoOriginal;      // logininfo is r.getLoginInfo in practice
 
         userIDLabel.setBounds(50, 100, 75, 25);
         userPasswordLabel.setBounds(50, 150, 75, 25);

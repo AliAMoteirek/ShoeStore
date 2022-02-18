@@ -19,6 +19,6 @@ public class Color {
 
     @Override
     public String toString() {
-        return "Color{" + '\'' +colorName + '\'' + '}';
+        return "Color: " + colorName + ",";
     }
 }

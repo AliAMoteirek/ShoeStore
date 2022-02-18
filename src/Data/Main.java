@@ -8,5 +8,10 @@ public class Main {
 		LoginPage loginPage = new LoginPage(r.getLoginInfo());
 		r.getAllShoesInStock().forEach(System.out::println);
 
+		System.out.println();
+
+		System.out.println(r.getAllCustomers());
+
+
 	}
 }

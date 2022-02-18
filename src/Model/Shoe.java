@@ -9,9 +9,10 @@ public class Shoe {
     private List<Category> categories;
     private List<ShoeDetail> shoeDetailList;
 
-    public Shoe(int id, String modelName) {
+    public Shoe(int id, String modelName, Brand brands) {
         this.id = id;
         this.modelName = modelName;
+        this.brands = brands;
     }
 
     public Shoe(int id,
@@ -52,7 +53,6 @@ public class Shoe {
 
     @Override
     public String toString() {
-        return "Shoe{" +
-                "Model name='" + modelName + '\'' + '}';
+        return "Model: " + modelName + ", " + brands;
     }
 }

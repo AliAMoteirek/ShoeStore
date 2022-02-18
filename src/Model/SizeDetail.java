@@ -21,7 +21,6 @@ public class SizeDetail {
 
     @Override
     public String toString() {
-        return "Size{" + '\''+ sizeNumber + '\'' +
-                '}';
+        return "Size: " + sizeNumber + ",";
     }
 }
