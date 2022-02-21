@@ -3,17 +3,17 @@ package Model;
 public class ShoeRate {
     private int id;
     private RateType rateType;
-    private Shoe shoeList;
-    private Customer customerList;
+    private Shoe shoe;
+    private Customer customer;
 
     public ShoeRate(int id,
                     RateType rateType,
-                    Shoe shoeList,
-                    Customer customerList) {
+                    Shoe shoe,
+                    Customer customer) {
         this.id = id;
         this.rateType = rateType;
-        this.shoeList = shoeList;
-        this.customerList = customerList;
+        this.shoe = shoe;
+        this.customer = customer;
     }
 
     public int getId() {
@@ -24,20 +24,20 @@ public class ShoeRate {
         return rateType;
     }
 
-    public Shoe getShoeList() {
-        return shoeList;
+    public Shoe getShoe() {
+        return shoe;
     }
 
-    public Customer getCustomerList() {
-        return customerList;
+    public Customer getCustomer() {
+        return customer;
     }
 
     @Override
     public String toString() {
         return "ShoeRate{" +
                 "Rate Type=" + rateType +
-                ", shoeList=" + shoeList +
-                ", customerList=" + customerList +
+                ", shoeList=" + shoe +
+                ", customerList=" + customer +
                 '}';
     }
 }

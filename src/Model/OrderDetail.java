@@ -33,6 +33,13 @@ public class OrderDetail {
         return customerOrder;
     }
 
+    public void printAllOrderDetails(){
+        System.out.println("Invoice Number: " + customerOrder.getInvoiceNumber() + "\n--------------------------\n"
+                + "Quantity: " + getQuantity() + " - Model Name: " + shoeDetail.getShoe().getModelName() + ", Color: " +
+                shoeDetail.getColor().getColorName() + ", Size: " + shoeDetail.getSizeDetail().getSizeNumber() + ", Price: " +
+                shoeDetail.getPrice() + "\n--------------------------\n");
+    }
+
     @Override
     public String toString() {
         return "OrderDetail {Quantity = " + quantity + '}';
