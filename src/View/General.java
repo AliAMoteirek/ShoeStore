@@ -15,7 +15,7 @@ public class General {
     }
 
     public static boolean isCurrentCustomerInvoiceNumber(){
-        return customerOrderWithInvoiceNumber != null;
+        return General.customerOrderWithInvoiceNumber != null;
     }
 
     public static void setLoggedInCustomer(Customer loggedInCustomer) {

@@ -115,14 +115,11 @@ public class Repository {
             while (rs != null && rs.next()) {
                 errormessage = rs.getString("ERROR");
             }
-            if (!errormessage.equals("")) {
-                return errormessage;
-            }
+            return errormessage;
         } catch (SQLException e) {
             e.printStackTrace();
             return "Could not make a review";
         }
-        return "Added a review";
     }
 
 
@@ -258,6 +255,32 @@ public class Repository {
             e.printStackTrace();
         }
     }
+
+    public CustomerOrder getCustomerOrderWithInvoiceNumber(int customerId, int shoeDetailId) {
+        ResultSet rs;
+        CustomerOrder customerOrder = null;
+        String query = "SELECT * FROM customerorderwithinvoicenumber " +
+                "WHERE Date(datetime) = current_date AND customer_id = ? ORDER BY datetime DESC LIMIT 1;";
+        try (
+                Connection connection = DriverManager.getConnection(url, username, password);
+                PreparedStatement preparedStatement = connection.prepareStatement(QUERY_GET_CURRENT_CUSTOMER_ORDER)
+        ) {
+            preparedStatement.setInt(1, customerId);
+            preparedStatement.setInt(2, shoeDetailId);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                customerOrder = new CustomerOrder(
+                        rs.getInt("id"),
+                        rs.getString("invoiceNumber"));
+            }
+            General.setCustomerOrder(customerOrder);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customerOrder;
+    }
+
 
     public LeveransAdress createLeveransAddres(int customerId) {
         LeveransAdress leveransAdress = null;

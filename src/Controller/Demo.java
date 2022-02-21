@@ -9,22 +9,35 @@ import static View.General.loggedInCustomer;
 
 public class Demo {
     Controller controller = new Controller();
+    PrintListener printListener = new PrintHandler();
 
     public Demo() {
         controller.login();
-        PrintListener printListener = new PrintHandler();
-        printListener.printGreetings(loggedInCustomer);
-        printListener.printOptions();
-        chooseOption();
+        boolean dontExit = true;
+        while (dontExit) {
+            printListener.printGreetings(loggedInCustomer);
+            printListener.printOptions();
+            dontExit = chooseOption();
+        }
     }
 
-    private void chooseOption() {
+    private boolean chooseOption() {
         Scanner input = new Scanner(System.in);
-        int option = input.nextInt();
-        while (option != 0) {
-            onOptionSelected(option);
-            option = input.nextInt();
+        String tmpoption = input.nextLine();
+        int option = -1;
+        try {
+            option = Integer.parseInt(tmpoption);
+
+        } catch (Exception e) {
+            System.out.println("Please enter a correct number");
         }
+
+        if (option == 0) {
+            return false;
+        } else {
+            onOptionSelected(option);
+        }
+        return true;
     }
 
     private void onOptionSelected(int option) {
@@ -34,7 +47,8 @@ public class Demo {
             case 3 -> controller.printListOfAllOrderedItems();
             case 4 -> controller.printListOfASelectedInvoice();
             case 5 -> controller.ratingShoe();
-            default -> controller.getASpecificShoeAverageRatingAndComments();
+            case 6 -> controller.getASpecificShoeAverageRatingAndComments();
+            default -> printListener.printOptions();
         }
     }
 }

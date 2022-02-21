@@ -112,7 +112,7 @@ public class Controller {
                     r.createLeveransAddres(loggedInCustomer.getId()).getId()));
             r.getCurrentCustomerOrder(loggedInCustomer.getId(), r.getShoeDetailID(modelName, color, size));
         } else {
-            r.getCurrentCustomerOrder(loggedInCustomer.getId(), r.getShoeDetailID(modelName, color, size));
+            //r.getCurrentCustomerOrder(loggedInCustomer.getId(), r.getShoeDetailID(modelName, color, size));
             System.out.println(r.addToCart(loggedInCustomer.getId(),
                     customerOrderWithInvoiceNumber.getId(),
                     r.getShoeDetailID(modelName, color, size),
@@ -132,8 +132,8 @@ public class Controller {
         if (orderDetails.isEmpty()) {
             System.out.println("You entered a wrong invoice number");
         }
-        for (int i = 0; i < orderDetails.size(); i++) {
-            orderDetails.get(i).printAllOrderDetails();
+        for (OrderDetail orderDetail : orderDetails) {
+            orderDetail.printAllOrderDetails();
         }
     }
 
@@ -150,9 +150,9 @@ public class Controller {
             rate = readRate();
             comment = readComment();
             int shoeToDoARate = r.getShoeToDoARate(loggedInCustomer.getId(), shoeModel);
-            r.writingARateAndComment(loggedInCustomer.getId(),
+            System.out.println(r.writingARateAndComment(loggedInCustomer.getId(),
                     shoeToDoARate,
-                    rate, comment);
+                    rate, comment));
         }
     }
 
