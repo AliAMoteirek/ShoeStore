@@ -5,7 +5,7 @@ import java.util.List;
 public class Category {
     private int id;
     private String categoryName;
-    private List<Shoe> shoeList;
+    private List<Shoe> shoeList;            //There is shoeList because of 1:N relation
 
     public Category(int id, String categoryName) {
         this.id = id;

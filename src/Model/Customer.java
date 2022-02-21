@@ -9,7 +9,7 @@ public class Customer {
     private String phoneNumber;
     private String email;
     private String password;
-    private List<CustomerOrder> customerOrderList;
+    private List<CustomerOrder> customerOrderList;            //There is customerOrderList because of 1:N relation
 
     public Customer(int id,
                     String firstName,

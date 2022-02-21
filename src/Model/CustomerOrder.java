@@ -10,7 +10,7 @@ public class CustomerOrder {
     private Timestamp dateTime;
     private Customer customer;
     private LeveransAdress leveransAdress;
-    private List<OrderDetail> orderDetailList;
+    private List<OrderDetail> orderDetailList;            //There is orderDetailList because of 1:N relation
 
     public CustomerOrder(int id, String invoiceNumber) {
         this.id = id;

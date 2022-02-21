@@ -6,8 +6,8 @@ public class Shoe {
     private int id;
     private String modelName;
     private Brand brands;
-    private List<Category> categories;
-    private List<ShoeDetail> shoeDetailList;
+    private List<Category> categories;            //There is categories because of 1:N relation
+    private List<ShoeDetail> shoeDetailList;            //There is shoeDetail because of 1:N relation
 
     public Shoe(int id, String modelName, Brand brands) {
         this.id = id;
