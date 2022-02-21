@@ -1,6 +1,6 @@
 package Controller;
 
-import Data.Repository;
+import Repository.Repository;
 import Model.ShoeComment;
 import Model.ShoeDetail;
 
@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Scanner;
 
-import static utils.General.*;
+import static View.General.*;
 
 public class Controller {
 

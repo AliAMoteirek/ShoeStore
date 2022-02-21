@@ -1,4 +1,4 @@
-package utils;
+package Repository;
 
 //We have all queries here to facilitate their use in the Repository class
 

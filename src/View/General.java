@@ -1,4 +1,4 @@
-package utils;
+package View;
 
 import Model.Customer;
 import Model.CustomerOrder;

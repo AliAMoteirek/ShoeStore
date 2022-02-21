@@ -1,8 +1,8 @@
-package Data;
+package Repository;
 
 import Model.*;
 import Model.Currency;
-import utils.General;
+import View.General;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
 
-import static utils.Constants.*;
+import static Repository.Constants.*;
 
 public class Repository {
     private String url;

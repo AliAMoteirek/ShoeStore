@@ -5,7 +5,7 @@ import ui.PrintListener;
 
 import java.util.Scanner;
 
-import static utils.General.loggedInCustomer;
+import static View.General.loggedInCustomer;
 
 public class Demo {
     Controller controller = new Controller();
