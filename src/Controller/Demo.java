@@ -1,7 +1,7 @@
 package Controller;
 
-import ui.PrintHandler;
-import ui.PrintListener;
+import UI.PrintHandler;
+import UI.PrintListener;
 
 import java.util.Scanner;
 
