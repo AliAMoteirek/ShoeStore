@@ -1,11 +1,13 @@
 package Controller;
 
+import Model.OrderDetail;
 import Repository.Repository;
 import Model.ShoeComment;
 import Model.ShoeDetail;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.util.Scanner;
 
 import static View.General.*;
@@ -126,11 +128,12 @@ public class Controller {
 
     public void printListOfASelectedInvoice() {
         String invoiceNumber = readInvoiceNumber();
-        if (r.listOfASpecificOrderedItem(loggedInCustomer.getId(), invoiceNumber).isEmpty()) {
+        List<OrderDetail> orderDetails = r.listOfASpecificOrderedItem(loggedInCustomer.getId(), invoiceNumber);
+        if (orderDetails.isEmpty()) {
             System.out.println("You entered a wrong invoice number");
         }
-        for (int i = 0; i < r.listOfASpecificOrderedItem(loggedInCustomer.getId(), invoiceNumber).size(); i++) {
-            r.listOfASpecificOrderedItem(loggedInCustomer.getId(), invoiceNumber).get(i).printAllOrderDetails();
+        for (int i = 0; i < orderDetails.size(); i++) {
+            orderDetails.get(i).printAllOrderDetails();
         }
     }
 
