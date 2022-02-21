@@ -149,7 +149,7 @@ public class Controller {
             shoeModel = rateShoeModel();
             rate = readRate();
             comment = readComment();
-            int shoeToDoARate = r.getShoeToDoARate(loggedInCustomer.getId(), shoeModel);
+            int shoeToDoARate = r.getShoeToDoARate(shoeModel);
             System.out.println(r.writingARateAndComment(loggedInCustomer.getId(),
                     shoeToDoARate,
                     rate, comment));
@@ -159,7 +159,7 @@ public class Controller {
     public void getASpecificShoeAverageRatingAndComments() {
         String shoeModel;
         shoeModel = readShoeModelForGettingComment();
-        int shoeId = r.getShoeToDoARate(loggedInCustomer.getId(), shoeModel);
+        int shoeId = r.getShoeToDoARate(shoeModel);
         System.out.println(shoeModel + " rating: " + r.getASpecificShoeAverageRating(shoeId));
         if (r.getASpecificShoeComments(shoeId).isEmpty()) {
             System.out.println("There are no comments for this shoe");

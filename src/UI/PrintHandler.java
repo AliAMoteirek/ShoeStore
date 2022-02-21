@@ -7,7 +7,7 @@ public class PrintHandler implements PrintListener{
     @Override
     public void printOptions() {
         System.out.println("""
-                Please choose an option:
+                \nPlease choose an option:
                 -----------------
                 (0) Exit
                 (1) Print all shoes in stock
@@ -21,7 +21,7 @@ public class PrintHandler implements PrintListener{
 
     @Override
     public void printGreetings(Customer customer) {
-        System.out.println("Hey " + customer.getFirstName() +
+        System.out.println("\n\nHey " + customer.getFirstName() +
                 "\n-----------------------\n" +
                 "Welcome to our store" +
                 "\n-----------------------");

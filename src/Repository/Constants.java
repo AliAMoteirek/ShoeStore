@@ -65,7 +65,7 @@ public class Constants {
             "INNER JOIN shoe s ON sd.shoe_id = s.id " +
             "INNER JOIN orderDetail o ON o.shoeDetail_id = sd.id " +
             "INNER JOIN customerOrder c ON o.customerOrder_id = c.id " +
-            "WHERE c.customer_id = ? AND s.modelName like ?;" ;
+            "WHERE /*c.customer_id = ? AND*/ s.modelName like ?;" ;
 
     public static final String QUERY_GET_SHOE_COMMENT = "SELECT * FROM shoeComment sc " +
             "INNER JOIN customer c ON sc.customer_id = c.id " +

@@ -79,16 +79,15 @@ public class Repository {
         return shoeCommentList;
     }
 
-    public int getShoeToDoARate(int customerId,
-                                String shoeName) {
+    public int getShoeToDoARate(/*int customerId,*/String shoeName) {
         int i = 0;
         ResultSet rs;
         try (
                 Connection connection = DriverManager.getConnection(url, username, password);
                 PreparedStatement preparedStatement = connection.prepareStatement(QUERY_GET_SHOE_TO_RATE)
         ) {
-            preparedStatement.setInt(1, customerId);
-            preparedStatement.setString(2, shoeName);
+            /*preparedStatement.setInt(1, customerId);*/
+            preparedStatement.setString(1, shoeName);
             rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 i = rs.getInt("shoe_id");
@@ -255,32 +254,6 @@ public class Repository {
             e.printStackTrace();
         }
     }
-
-    public CustomerOrder getCustomerOrderWithInvoiceNumber(int customerId, int shoeDetailId) {
-        ResultSet rs;
-        CustomerOrder customerOrder = null;
-        String query = "SELECT * FROM customerorderwithinvoicenumber " +
-                "WHERE Date(datetime) = current_date AND customer_id = ? ORDER BY datetime DESC LIMIT 1;";
-        try (
-                Connection connection = DriverManager.getConnection(url, username, password);
-                PreparedStatement preparedStatement = connection.prepareStatement(QUERY_GET_CURRENT_CUSTOMER_ORDER)
-        ) {
-            preparedStatement.setInt(1, customerId);
-            preparedStatement.setInt(2, shoeDetailId);
-            rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                customerOrder = new CustomerOrder(
-                        rs.getInt("id"),
-                        rs.getString("invoiceNumber"));
-            }
-            General.setCustomerOrder(customerOrder);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return customerOrder;
-    }
-
 
     public LeveransAdress createLeveransAddres(int customerId) {
         LeveransAdress leveransAdress = null;
