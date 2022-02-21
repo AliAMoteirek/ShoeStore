@@ -298,31 +298,6 @@ public class Repository {
         return i;
     }
 
-    public void loggingInCustomer(String username1, String password1) {
-        Customer customer = null;
-        ResultSet rs;
-        try (
-                Connection connection = DriverManager.getConnection(url, username, password);
-                PreparedStatement preparedStatement = connection.prepareStatement(QUERY_LOGGED_IN_CUSTOMER)
-        ) {
-            preparedStatement.setString(1, username1);
-            preparedStatement.setString(2, password1);
-            rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                customer = new Customer(rs.getInt("id"),
-                        rs.getString("firstName"),
-                        rs.getString("lastName"),
-                        rs.getString("phoneNumber"),
-                        rs.getString("email"),
-                        rs.getString("password")
-                );
-            }
-            General.setLoggedInCustomer(customer);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     // Prompt the user by printing all the products that are in stock, the user can choose one.
     public List<ShoeDetail> getAllShoesInStock() {
         List<ShoeDetail> shoeDetailList = new ArrayList<>();
@@ -356,5 +331,30 @@ public class Repository {
             e.printStackTrace();
         }
         return shoeDetailList;
+    }
+
+    public void loggingInCustomer(String username1, String password1) {
+        Customer customer = null;
+        ResultSet rs;
+        try (
+                Connection connection = DriverManager.getConnection(url, username, password);
+                PreparedStatement preparedStatement = connection.prepareStatement(QUERY_LOGGED_IN_CUSTOMER)
+        ) {
+            preparedStatement.setString(1, username1);
+            preparedStatement.setString(2, password1);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                customer = new Customer(rs.getInt("id"),
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getString("phoneNumber"),
+                        rs.getString("email"),
+                        rs.getString("password")
+                );
+            }
+            General.setLoggedInCustomer(customer);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
