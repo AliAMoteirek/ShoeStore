@@ -234,6 +234,22 @@ public class Repository {
         return "Added to database.";
     }
 
+    /*public int getCurrentCustomerOrderTest(int customerId, int leveransAdressid) {
+        int customerOrderId = 0;
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             CallableStatement stmt = connection.prepareCall("{? = CALL newCustomerOrder(?,?)}")) {
+            stmt.registerOutParameter(1, Types.INTEGER);
+            stmt.setInt(2, customerId);
+            stmt.setInt(3, leveransAdressid);
+            stmt.execute();
+            customerOrderId = stmt.getInt(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customerOrderId;
+    }*/
+
     public void getCurrentCustomerOrder(int customerId, int shoeDetailId) {
         ResultSet rs;
         CustomerOrder customerOrder = null;

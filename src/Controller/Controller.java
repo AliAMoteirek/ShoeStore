@@ -16,6 +16,7 @@ public class Controller {
 
     Repository r = new Repository();
     Scanner scan = new Scanner(System.in);
+    int customerOrder = 0 ;
 
     public void login() {
         while (!isCustomerLoggedIn(loggedInCustomer)) {
@@ -104,6 +105,23 @@ public class Controller {
         String modelName = readShoeModel();
         String color = readColor();
         String size = readSize();
+        /*
+        int leveransAdressId = r.createLeveransAddres(loggedInCustomer.getId()).getId();
+        int currentCustomerOrderTest = r.getCurrentCustomerOrderTest(loggedInCustomer.getId(),
+                leveransAdressId);
+        if(customerOrder == 0) {
+            System.out.println(r.addToCart(loggedInCustomer.getId(),
+                    customerOrder,
+                    r.getShoeDetailID(modelName, color, size),
+                    leveransAdressId));
+            customerOrder = currentCustomerOrderTest;
+        } else {
+            System.out.println(r.addToCart(loggedInCustomer.getId(),
+                    customerOrder,
+                    r.getShoeDetailID(modelName, color, size),
+                    leveransAdressId));
+        }*/
+
 
         if (!isCurrentCustomerInvoiceNumber()) {
             System.out.println(r.addToCart(loggedInCustomer.getId()
