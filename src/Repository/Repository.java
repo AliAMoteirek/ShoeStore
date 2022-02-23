@@ -239,7 +239,7 @@ public class Repository {
         return "Added to database.";
     }
 
-    public View.CurrentCustomerOrder getCurrentCustomerOrder(int customerId, int shoeDetailId) {
+    public CurrentCustomerOrder getCurrentCustomerOrder(int customerId, int shoeDetailId) {
         ResultSet rs;
         View.CurrentCustomerOrder customerOrder = null;
         try (
@@ -250,7 +250,7 @@ public class Repository {
             preparedStatement.setInt(2, shoeDetailId);
             rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                customerOrder = new View.CurrentCustomerOrder(
+                customerOrder = new CurrentCustomerOrder(
                         rs.getInt("id"),
                         rs.getString("invoiceNumber"),
                         rs.getTimestamp("dateTime"));
