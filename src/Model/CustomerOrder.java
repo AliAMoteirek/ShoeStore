@@ -1,12 +1,11 @@
 package Model;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 public class CustomerOrder {
-    private int id;
-    private String invoiceNumber;
+    private final int id;
+    private final String invoiceNumber;
     private Timestamp dateTime;
     private Customer customer;
     private LeveransAdress leveransAdress;

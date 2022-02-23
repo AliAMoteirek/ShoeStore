@@ -2,6 +2,7 @@ package Repository;
 
 import Model.*;
 import Model.Currency;
+import View.CurrentCustomerOrder;
 import View.General;
 
 import java.io.FileReader;
@@ -79,7 +80,7 @@ public class Repository {
         return shoeCommentList;
     }
 
-    public int getShoeToDoARate(/*int customerId,*/String shoeName) {
+    public int getShoeToDoARate(String shoeName) {
         int i = 0;
         ResultSet rs;
         try (
@@ -155,8 +156,9 @@ public class Repository {
                 orderDetailList.add(new OrderDetail(rs.getInt("o.id"),
                         rs.getInt("quantity"),
                         new ShoeDetail(id, shoe, currency, color, sizeDetail, price, stock),
-                        new CustomerOrder(rs.getInt("ci.id"),
-                                rs.getString("invoiceNumber"))));
+                        new CurrentCustomerOrder(rs.getInt("ci.id"),
+                                rs.getString("invoiceNumber"),
+                                rs.getTimestamp("dateTime"))));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -169,7 +171,7 @@ public class Repository {
         ResultSet rs;
         try (
                 Connection connection = DriverManager.getConnection(url, username, password);
-                PreparedStatement preparedStatement = connection.prepareStatement(QQUERY_LIST_ALL_ORDER)
+                PreparedStatement preparedStatement = connection.prepareStatement(QUERY_LIST_ALL_ORDERS)
         ) {
             preparedStatement.setInt(1, customerId);
             rs = preparedStatement.executeQuery();
@@ -195,8 +197,11 @@ public class Repository {
                 orderDetailList.add(new OrderDetail(rs.getInt("o.id"),
                         rs.getInt("quantity"),
                         new ShoeDetail(id, shoe, currency, color, sizeDetail, price, stock),
-                        new CustomerOrder(rs.getInt("ci.id"),
-                                rs.getString("invoiceNumber"))));
+                        /*new CustomerOrder(rs.getInt("ci.id"),
+                                rs.getString("invoiceNumber"))*/
+                        new CurrentCustomerOrder(rs.getInt("ci.id"),
+                                rs.getString("invoiceNumber"),
+                                rs.getTimestamp("dateTime"))));
             }
 
         } catch (SQLException e) {
@@ -234,25 +239,9 @@ public class Repository {
         return "Added to database.";
     }
 
-    /*public int getCurrentCustomerOrderTest(int customerId, int leveransAdressid) {
-        int customerOrderId = 0;
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             CallableStatement stmt = connection.prepareCall("{? = CALL newCustomerOrder(?,?)}")) {
-            stmt.registerOutParameter(1, Types.INTEGER);
-            stmt.setInt(2, customerId);
-            stmt.setInt(3, leveransAdressid);
-            stmt.execute();
-            customerOrderId = stmt.getInt(1);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return customerOrderId;
-    }*/
-
-    public void getCurrentCustomerOrder(int customerId, int shoeDetailId) {
+    public View.CurrentCustomerOrder getCurrentCustomerOrder(int customerId, int shoeDetailId) {
         ResultSet rs;
-        CustomerOrder customerOrder = null;
+        View.CurrentCustomerOrder customerOrder = null;
         try (
                 Connection connection = DriverManager.getConnection(url, username, password);
                 PreparedStatement preparedStatement = connection.prepareStatement(QUERY_GET_CURRENT_CUSTOMER_ORDER)
@@ -261,14 +250,16 @@ public class Repository {
             preparedStatement.setInt(2, shoeDetailId);
             rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                customerOrder = new CustomerOrder(
+                customerOrder = new View.CurrentCustomerOrder(
                         rs.getInt("id"),
-                        rs.getString("invoiceNumber"));
+                        rs.getString("invoiceNumber"),
+                        rs.getTimestamp("dateTime"));
             }
-            General.setCustomerOrder(customerOrder);
+            //General.setCustomerOrder(customerOrder);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return customerOrder;
     }
 
     public LeveransAdress createLeveransAddres(int customerId) {

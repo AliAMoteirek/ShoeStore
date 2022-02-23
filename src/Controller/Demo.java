@@ -8,8 +8,8 @@ import java.util.Scanner;
 import static View.General.loggedInCustomer;
 
 public class Demo {
-    Controller controller = new Controller();
-    PrintListener printListener = new PrintHandler();
+    private final Controller controller = new Controller();
+    private final PrintListener printListener = new PrintHandler();
 
     public Demo() {
         controller.login();
@@ -29,7 +29,7 @@ public class Demo {
             option = Integer.parseInt(tmpoption);
 
         } catch (Exception e) {
-            System.out.println("Please enter a correct number");
+            printListener.printErrorNumber();
         }
 
         if (option == 0) {
@@ -44,11 +44,11 @@ public class Demo {
         switch (option) {
             case 1 -> controller.printingAllShoesInStock();
             case 2 -> controller.usingAddToCart();
-            case 3 -> controller.printListOfAllOrderedItems();
-            case 4 -> controller.printListOfASelectedInvoice();
+            case 3 -> controller.printListOfASelectedInvoice();
+            case 4 -> controller.printListOfAllOrderedItems();
             case 5 -> controller.ratingShoe();
             case 6 -> controller.getASpecificShoeAverageRatingAndComments();
-            default -> printListener.printOptions();
+            default -> printListener.printErrorNumber();
         }
     }
 }

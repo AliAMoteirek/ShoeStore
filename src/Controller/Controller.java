@@ -4,6 +4,9 @@ import Model.OrderDetail;
 import Repository.Repository;
 import Model.ShoeComment;
 import Model.ShoeDetail;
+import UI.PrintHandler;
+import UI.PrintListener;
+import View.CurrentCustomerOrder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +17,10 @@ import static View.General.*;
 
 public class Controller {
 
-    Repository r = new Repository();
-    Scanner scan = new Scanner(System.in);
-    int customerOrder = 0 ;
+    private final Repository r = new Repository();
+    private final Scanner scan = new Scanner(System.in);
+    private final PrintListener printListener = new PrintHandler();
+    CurrentCustomerOrder currentCustomerOrder = null;
 
     public void login() {
         while (!isCustomerLoggedIn(loggedInCustomer)) {
@@ -48,91 +52,37 @@ public class Controller {
         }
     }
 
-    private String readShoeModel() {
-        System.out.println("\nWhich shoe model do you want to buy");
-        return scan.nextLine().trim();
-    }
-
-    private String readShoeModelForGettingComment() {
-        System.out.println("\nWhich shoe model do you want to see it's review");
-        return scan.nextLine().trim();
-    }
-
-    private String readColor() {
-        System.out.println("\nWhich color do you want to choose");
-        return scan.nextLine().trim();
-    }
-
-    private String readSize() {
-        System.out.println("\nWhich size do you want");
-        return scan.nextLine().trim();
-    }
-
-    private String readInvoiceNumber() {
-        System.out.println("\nWhich invoice number do you choose");
-        return scan.nextLine().trim();
-    }
-
-    private String rateShoeModel() {
-        System.out.println("\nWhich shoe model do you want to rate");
-        return scan.nextLine().trim();
-    }
-
-
     private int readRate() {
         while (true) {
-            System.out.println("""
-                    Please rate the shoe with a number between 1 and 5\s
-                    (1 is the lowest rate and 5 is the hightest)""");
+            printListener.rateShoeMessage();
             try {
                 int readNumber = Integer.parseInt(scan.nextLine());
                 if (readNumber < 1 || readNumber > 5)
                     throw new RuntimeException();
                 return readNumber;
             } catch (Exception e) {
-                System.out.println("Input should be between 1 and 5.");
+                printListener.rateShoeInputError();
             }
         }
     }
 
-    private String readComment() {
-        System.out.println("\nPlease write a comment");
-        return scan.nextLine().trim();
-    }
-
     public void usingAddToCart() {
-        System.out.println("Adding to cart...");
-        String modelName = readShoeModel();
-        String color = readColor();
-        String size = readSize();
-        /*
-        int leveransAdressId = r.createLeveransAddres(loggedInCustomer.getId()).getId();
-        int currentCustomerOrderTest = r.getCurrentCustomerOrderTest(loggedInCustomer.getId(),
-                leveransAdressId);
-        if(customerOrder == 0) {
-            System.out.println(r.addToCart(loggedInCustomer.getId(),
-                    customerOrder,
-                    r.getShoeDetailID(modelName, color, size),
-                    leveransAdressId));
-            customerOrder = currentCustomerOrderTest;
-        } else {
-            System.out.println(r.addToCart(loggedInCustomer.getId(),
-                    customerOrder,
-                    r.getShoeDetailID(modelName, color, size),
-                    leveransAdressId));
-        }*/
+        printListener.addingToCart();
+        String modelName = printListener.readShoeModel(scan);
+        String color = printListener.readColor(scan);
+        String size = printListener.readSize(scan);
 
-
-        if (!isCurrentCustomerInvoiceNumber()) {
+        if(currentCustomerOrder == null){
             System.out.println(r.addToCart(loggedInCustomer.getId()
                     , 0,
                     r.getShoeDetailID(modelName, color, size),
                     r.createLeveransAddres(loggedInCustomer.getId()).getId()));
-            r.getCurrentCustomerOrder(loggedInCustomer.getId(), r.getShoeDetailID(modelName, color, size));
-        } else {
-            //r.getCurrentCustomerOrder(loggedInCustomer.getId(), r.getShoeDetailID(modelName, color, size));
+            currentCustomerOrder = r.getCurrentCustomerOrder(loggedInCustomer.getId(),
+                    r.getShoeDetailID(modelName, color, size));
+        }
+        else{
             System.out.println(r.addToCart(loggedInCustomer.getId(),
-                    customerOrderWithInvoiceNumber.getId(),
+                    currentCustomerOrder.getId(),
                     r.getShoeDetailID(modelName, color, size),
                     r.createLeveransAddres(loggedInCustomer.getId()).getId()));
         }
@@ -145,28 +95,29 @@ public class Controller {
     }
 
     public void printListOfASelectedInvoice() {
-        String invoiceNumber = readInvoiceNumber();
-        List<OrderDetail> orderDetails = r.listOfASpecificOrderedItem(loggedInCustomer.getId(), invoiceNumber);
-        if (orderDetails.isEmpty()) {
-            System.out.println("You entered a wrong invoice number");
-        }
-        for (OrderDetail orderDetail : orderDetails) {
-            orderDetail.printAllOrderDetails();
+
+        if (currentCustomerOrder == null) {
+            printListener.printErrorForPrintingInvoiceWithNoOrder();
+        }else {
+            List<OrderDetail> orderDetails =
+                    r.listOfASpecificOrderedItem(loggedInCustomer.getId(), currentCustomerOrder.getInvoiceNumber());
+            for (OrderDetail orderDetail : orderDetails) {
+                orderDetail.printAllOrderDetails();
+            }
         }
     }
 
     public void ratingShoe() {
-        printListOfAllOrderedItems();
+        printListOfASelectedInvoice();
         String shoeModel;
         int rate;
         String comment;
-        String invoiceNumber = readInvoiceNumber();
-        if (r.listOfASpecificOrderedItem(loggedInCustomer.getId(), invoiceNumber).isEmpty()) {
-            System.out.println("You entered a wrong invoice number");
+        if (currentCustomerOrder == null) {
+            printListener.printErrorCanNotReviewWithoutOrder();
         } else {
-            shoeModel = rateShoeModel();
+            shoeModel = printListener.rateShoeModel(scan);
             rate = readRate();
-            comment = readComment();
+            comment = printListener.readComment(scan);
             int shoeToDoARate = r.getShoeToDoARate(shoeModel);
             System.out.println(r.writingARateAndComment(loggedInCustomer.getId(),
                     shoeToDoARate,
@@ -176,11 +127,12 @@ public class Controller {
 
     public void getASpecificShoeAverageRatingAndComments() {
         String shoeModel;
-        shoeModel = readShoeModelForGettingComment();
+        shoeModel = printListener.readShoeModelForGettingComment(scan);
         int shoeId = r.getShoeToDoARate(shoeModel);
-        System.out.println(shoeModel + " rating: " + r.getASpecificShoeAverageRating(shoeId));
+        double aSpecificShoeAverageRating = r.getASpecificShoeAverageRating(shoeId);
+        printListener.printingAverageRateOfASpecificShoe(shoeModel, aSpecificShoeAverageRating);
         if (r.getASpecificShoeComments(shoeId).isEmpty()) {
-            System.out.println("There are no comments for this shoe");
+            printListener.printingNoCommentFound();
         } else {
             r.getASpecificShoeComments(shoeId).
                     forEach(ShoeComment::printComments);
