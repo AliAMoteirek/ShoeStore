@@ -48,8 +48,8 @@ public class OrderDetail {
     }
 
     public void printAllOrderDetails(){
-        System.out.println("Invoice Number: " + currentCustomerOrder.getInvoiceNumber() + " - Date: " +
-                currentCustomerOrder.getDateTime() + "\n-----------------------------------------------------------\n"
+        System.out.println("Invoice Number: " + currentCustomerOrder.invoiceNumber() + " - Date: " +
+                currentCustomerOrder.dateTime() + "\n-----------------------------------------------------------\n"
                 + "Quantity: " + getQuantity() + " - Model Name: " + shoeDetail.getShoe().getModelName() + ", Color: " +
                 shoeDetail.getColor().getColorName() + ", Size: " + shoeDetail.getSizeDetail().getSizeNumber() + ", Price: " +
                 shoeDetail.getPrice() + "\n-----------------------------------------------------------\n");

@@ -82,7 +82,7 @@ public class Controller {
         }
         else{
             System.out.println(r.addToCart(loggedInCustomer.getId(),
-                    currentCustomerOrder.getId(),
+                    currentCustomerOrder.id(),
                     r.getShoeDetailID(modelName, color, size),
                     r.createLeveransAddres(loggedInCustomer.getId()).getId()));
         }
@@ -100,7 +100,7 @@ public class Controller {
             printListener.printErrorForPrintingInvoiceWithNoOrder();
         }else {
             List<OrderDetail> orderDetails =
-                    r.listOfASpecificOrderedItem(loggedInCustomer.getId(), currentCustomerOrder.getInvoiceNumber());
+                    r.listOfASpecificOrderedItem(loggedInCustomer.getId(), currentCustomerOrder.invoiceNumber());
             for (OrderDetail orderDetail : orderDetails) {
                 orderDetail.printAllOrderDetails();
             }
