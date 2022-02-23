@@ -31,7 +31,7 @@ public class PrintHandler implements PrintListener {
 
     @Override
     public void printErrorNumber() {
-        System.out.println("Please enter a number between and 6");
+        System.out.println("Please enter a number between 1 and 6");
     }
 
     @Override
